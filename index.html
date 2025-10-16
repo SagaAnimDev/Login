@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Firebase Sign Up</title>
+  <!-- Font Awesome CDN for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyANyWUgKqCC16lfDlhbIj6vS6wvMjin7ao",
+      authDomain: "login-d5b28.firebaseapp.com",
+      projectId: "login-d5b28",
+      storageBucket: "login-d5b28.firebasestorage.app",
+      messagingSenderId: "355713645769",
+      appId: "1:355713645769:web:8f5bffa8ca1a28c848a118",
+      measurementId: "G-XKHGPN3K94"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    window.signup = function(e) {
+      e.preventDefault();
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
+      document.getElementById("loading").style.display = "flex";
+
+      createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          document.getElementById("loading").style.display = "none";
+          alert("Sign Up Successful! Welcome " + userCredential.user.email);
+          document.getElementById("signupForm").reset();
+          window.location.href = "index(3).html";
+        })
+        .catch((error) => {
+          document.getElementById("loading").style.display = "none";
+          alert("Error: " + error.message);
+        });
+    };
+  </script>
+
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .card {
+      background: #ffffffcc;
+      backdrop-filter: blur(10px);
+      padding: 35px 40px;
+      border-radius: 20px;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);
+      width: 360px;
+      text-align: center;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 25px 35px rgba(0, 0, 0, 0.3);
+    }
+
+    h2 {
+      color: #333;
+      margin-bottom: 25px;
+      font-weight: 700;
+    }
+
+    .form-group {
+      position: relative;
+      margin-bottom: 20px;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 12px 45px;
+      border: 1px solid #ccc;
+      border-radius: 12px;
+      font-size: 15px;
+      transition: 0.3s;
+      background: rgba(255,255,255,0.8);
+    }
+
+    .form-group input:focus {
+      border-color: #764ba2;
+      outline: none;
+      box-shadow: 0 0 5px rgba(118,75,162,0.5);
+    }
+
+    .form-group .fa {
+      position: absolute;
+      top: 50%;
+      left: 15px;
+      transform: translateY(-50%);
+      color: #888;
+      font-size: 16px;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 12px 0;
+      border: none;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: #fff;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      background: linear-gradient(135deg, #764ba2, #667eea);
+    }
+
+    .link {
+      display: block;
+      margin-top: 15px;
+      font-size: 14px;
+      color: #764ba2;
+      text-decoration: none;
+    }
+
+    .link:hover {
+      text-decoration: underline;
+    }
+
+    /* Loading Overlay */
+    #loading {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    .loader {
+      border: 8px solid #f3f3f3;
+      border-top: 8px solid #764ba2;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg);}
+      100% { transform: rotate(360deg);}
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>Create Account</h2>
+    <form id="signupForm" onsubmit="signup(event)">
+      <div class="form-group">
+        <i class="fa fa-envelope"></i>
+        <input type="email" id="email" placeholder="Email" required>
+      </div>
+      <div class="form-group">
+        <i class="fa fa-lock"></i>
+        <input type="password" id="password" placeholder="Password" required>
+      </div>
+      <button type="submit" class="btn"><i class="fa fa-user-plus"></i> Sign Up</button>
+    </form>
+    <a href="index(2).html" class="link">Already have an account? Login</a>
+  </div>
+
+  <!-- Loading Overlay -->
+  <div id="loading">
+    <div class="loader"></div>
+  </div>
+</body>
+</html>
